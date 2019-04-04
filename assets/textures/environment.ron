@@ -1,0 +1,12 @@
+#![enable(implicit_some)]
+#![enable(unwrap_newtypes)]
+(
+  Tilemap (
+    path: "textures/environment",
+    tile_size: (16, 16),
+    size: (256, 256),
+    map: {
+      "default": 0,
+    }
+  )
+)
