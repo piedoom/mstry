@@ -13,7 +13,7 @@ impl SimpleState for Mstry {
         let world = data.world;
         world.register::<SpriteRender>();
         world.register::<Transform>();
-        initialize_camera(world, 4f32);
+        initialize_camera(world, 3f32);
         initialize_map(world);
     }
 }
@@ -67,20 +67,34 @@ fn initialize_map(world: &mut World) {
     // load the environment map
     let sprites = load_sprite_sheet(world, "textures/environment");
 
-    let sprite_render = SpriteRender {
-        sprite_sheet: sprites.clone(),
-        sprite_number: 0, // this depends on what texture we want
-    };
+    let map = vec![
+        [1,1,1,2,1,1,1,1],
+        [1,1,1,2,1,1,1,1],
+        [1,1,1,2,1,1,1,1],
+        [1,1,1,2,1,1,1,1],
+        [1,1,1,2,1,1,1,1],
+        [1,1,1,2,1,1,1,1],
+        [1,1,1,2,1,1,1,1],
+        [1,1,1,2,1,1,1,1],
+    ];
 
-    
-    // set up map tile entities
-    world
-        .create_entity()
-        .with(sprite_render.clone())
-        .with({
+    for (row_id, row) in map.iter().enumerate() {
+        for (tile_id, tile) in row.iter().enumerate() {
             let mut t = Transform::default();
-            t.set_translation_z(0.0);
-            t
-        })
-        .build();
+            t.set_translation_x((tile_id * 32usize) as f32);
+            t.set_translation_y((row_id * 32usize) as f32);
+
+
+            // set up map tile entities
+            world
+                .create_entity()
+                .with(SpriteRender {
+                    sprite_sheet: sprites.clone(),
+                    sprite_number: *tile, // this depends on what texture we want
+                })
+                .with(t)
+                .build();
+        }
+    }
+    
 }
