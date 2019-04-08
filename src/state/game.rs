@@ -13,7 +13,7 @@ impl SimpleState for Mstry {
         let world = data.world;
         world.register::<SpriteRender>();
         world.register::<Transform>();
-        initialize_camera(world, 3f32);
+        initialize_camera(world, 4f32);
         initialize_map(world);
     }
 }
